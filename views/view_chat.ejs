@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script type="text/javascript" src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<style type="text/css">
+		body{
+			margin-top: 30px;
+		}
+		#chatbox{
+			height: 400px;
+			overflow-y: scroll;
+		}
+		#userList{
+			height: 410px;
+			overflow-y: auto;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row" id="loginPanel">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel panel-info">
+					<div class="panel-heading"><strong>Login to Chatroom</strong></div>
+					<div class="panel-body">
+						<form method="post" class="form">
+							<div class="form-group has-feedback">
+								<input type="text" id="username" placeholder="Your username" class="form-control">
+								<span class="glyphicon glyphicon-user form-control-feedback"></span>
+							</div>
+							<div>
+								<button type="button" id="btnLogin" class="btn btn-primary pull-right">Login</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" id="chatPanel" style="display: none;" >
+			<div class="col-md-3">
+				<div class="panel panel-success">
+					<div class="panel-heading"><strong>Connected Users</strong></div>
+					<div class="panel-body" id="userList">
+						
+					</div>
+					<div class="panel-footer" id="serverStatus">
+						<strong>Status:</strong> <label style="color: red;">Disconnected</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-9">
+				<div class="row">
+					<div class="panel panel-success">
+						<div class="panel-heading"><strong>Chat History</strong></div>
+						<div class="panel-body" id="chatbox">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-11">
+						<div class="form-group">
+							<input type="text" id="message" placeholder="Enter your message" class="form-control" />
+						</div>
+					</div>
+					<div class="col-md-1">
+						<button id="btnSend" class="btn btn-success">Send</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function(){
+
+			var username = 'Anonymous';
+
+			$('#btnLogin').click(function(){
+				if($('#username').val() != '')
+				{
+					username = $('#username').val();
+				}
+				$('#loginPanel').hide();
+				$('#chatPanel').show();
+			});
+
+			var socket = io.connect();
+
+			socket.on('connect', function(){
+				$('#serverStatus').html('<strong>Status:</strong> <label style="color: green;">Connected</label>');
+				$('#userList').append('<span class="glyphicon glyphicon-user"></span> ' + username + '<br/>');
+				
+			});
+			socket.on('disconnect', function(){
+				$('#serverStatus').html('<strong>Status:</strong> <label style="color: red;">Disconnected</label>');
+			});
+			socket.on('connect_error', function(){
+				$('#serverStatus').html('<strong>Status:</strong> <label style="color: red;">Server Error</label>');
+			});
+			socket.on('incoming data', function(obj){
+				$('#chatbox').append('<div class="well">' + obj.message + '</div>');
+			});
+
+			$('#btnSend').click(function(){
+				var message = username + ' says: ' + $('#message').val()
+				socket.emit('send data', message);
+			});
+		});
+	</script>
+</body>
+</html>

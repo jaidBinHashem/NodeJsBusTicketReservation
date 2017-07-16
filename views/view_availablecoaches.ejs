@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Available Coaches</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+  <div class="container">
+   <br>
+    <a href="/userhome" class="btn btn-primary btn-block">HOME</a><br>
+    <h2>Available Coaches</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Coach Number</th>
+          <th>Type</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Depature Time</th>
+          <th>Available Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = coaches.length-1; i> -1; i--) { %>
+        <tr>
+          <td><a href="userhome/reserveseat:<%= coaches[i].id %>"><%= coaches[i].id %></a></td>
+          <td><%= coaches[i].type %></td>
+          <td><%= coaches[i].origin %></td>
+          <td><%= coaches[i].destination %></td>
+          <td><%= coaches[i].departuretime %></td>
+          <td><%= coaches[i].arrivaltime %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+   <br>
+   <a href="/logout" class="btn btn-primary btn-block">Logout</a>
+ </div>
+
+</body>
+</html>

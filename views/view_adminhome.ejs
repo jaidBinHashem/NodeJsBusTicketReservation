@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>HOME</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Coach Number</th>
+        <th>Type</th>
+        <th>Origin</th>
+    	<th>Destination</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for (var i = coaches.length-1; i> -1; i--) { %>
+      <tr>
+        <td><a href="adminhome/coachdetails:<%= coaches[i].id %>"><%= coaches[i].id %></a></td>
+        <td><%= coaches[i].type %></td>
+        <td><%= coaches[i].origin %></td>
+        <td><%= coaches[i].destination %></td>
+      </tr>
+    <% } %>
+    </tbody>
+  </table>
+  <div>
+  	<a href="adminhome/coaches" class="btn btn-primary">Coaches</a>
+  	<a href="adminhome/routes" class="btn btn-primary">Routes</a>
+  	<a href="adminhome/reservations" class="btn btn-primary">Reservations</a>
+  </div>
+  <br>
+  <h2>Reports</h2>
+  <a href="adminhome/coachreports" class="btn btn-primary">Coach Reports</a>
+  <a href="adminhome/reservetypereports" class="btn btn-primary">Reserved Types Report</a>
+  <br>
+  <br>
+  <a href="/adminhome/logout" class="btn btn-primary btn-block">Logout</a>
+</div>
+
+</body>
+</html>

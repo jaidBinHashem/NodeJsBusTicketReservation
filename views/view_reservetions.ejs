@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Reserves</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+
+  <div class="container">
+  <br>
+  <a href="/userhome" class="btn btn-primary btn-block">HOME</a><br>
+    <h2>Reserves</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Coach Number</th>
+          <th>User Name</th>
+          <th>Type</th>
+          <th>Seat</th>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Date</th>
+          <th>Depature Time</th>
+          <th>Available Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i = reservations.length-1; i> -1; i--) { %>
+        <tr>
+          <td><%= reservations[i].coachid %></td>
+          <td><%= reservations[i].name %></td>
+          <td><%= reservations[i].type %></td>
+          <td><%= reservations[i].seat %></td>
+          <td><%= reservations[i].origin %></td>
+          <td><%= reservations[i].destination %></td>
+          <td><%= reservations[i].date %></td>
+          <td><%= reservations[i].departuretime %></td>
+          <td><%= reservations[i].arrivaltime %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+   <br>
+   <a href="/adminhome/logout" class="btn btn-primary btn-block">Logout</a>
+ </div>
+
+</body>
+</html>
